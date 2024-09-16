@@ -1,0 +1,30 @@
+.hostCounter {
+  background-color: #343a40;
+  color: white;
+  padding: 2rem 0; /* Adjust vertical padding as needed */
+  width: 100%; /* Ensures the section spans the full width of the parent */
+}
+
+.hostCounterContainer {
+  display: flex; /* Use Flexbox for layout */
+  justify-content: space-between; /* Distribute space between items */
+  flex-wrap: wrap; /* Allow items to wrap to the next line if needed */
+  max-width: 1200px; /* Optional: Limit the maximum width of the container */
+  margin: 0 auto; /* Center the container if using a max-width */
+}
+
+.hostCounterEle {
+  flex: 1 1 18%; /* Flex-grow, flex-shrink, and basis for width */
+  margin: 0.5rem; /* Spacing between items */
+  text-align: center; /* Center-aligns text within each item */
+  box-sizing: border-box; /* Includes padding and border in the element's width */
+}
+
+.hostCounterEleNumber {
+  font-size: 2rem; /* Adjust font size as needed */
+  margin-bottom: 0.5rem;
+}
+
+.hostCounterEleText {
+  font-size: 1rem; /* Adjust font size as needed */
+}

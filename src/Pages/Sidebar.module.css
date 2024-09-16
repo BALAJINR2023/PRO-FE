@@ -1,0 +1,46 @@
+/* Sidebar.module.css */
+.sidebarButton {
+  margin: 0px 20px;
+    background-color: transparent !important; /* Transparent background */
+    color: #fff; /* White icon color */
+    border: none;
+    font-size: 1.5rem; /* Adjust icon size */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem; /* Optional: padding around the icon */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Optional: shadow effect */
+    transition: box-shadow 0.3s ease-in-out; /* Smooth transition for shadow effect */
+  }
+  
+  .sidebarButton:hover {
+    box-shadow: 0 0 10px rgba(238, 240, 242, 0.6); /* Add a glow effect */
+  }
+  .offcanvasSidebar {
+    min-height: 100vh;
+    background-color: #f8f9fa; /* Light background for the sidebar */
+  }
+  
+  .sidebarContent {
+    padding: 1rem;
+  }
+  
+  .sidebarLinks {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .sidebarLink {
+    margin-bottom: 0.5rem;
+  }
+  
+  .sidebarDesktop {
+    display: none;
+  }
+  
+  @media (min-width: 768px) {
+    .sidebarDesktop {
+      display: block;
+    }
+  }
+  

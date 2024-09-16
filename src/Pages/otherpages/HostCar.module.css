@@ -1,0 +1,68 @@
+.hostCarSharingBenefitsTitle {
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  color: #a8a8a8;
+}
+
+.leftTitle {
+  padding: 1rem;
+}
+
+.hostCarSharingBenefitsFlex {
+  display: flex;
+  flex-direction: row; /* Align items horizontally */
+  flex-wrap: nowrap; /* Allow wrapping to next line if needed */
+  gap: 1rem; /* Space between items */
+}
+
+.flexItem {
+  flex: 1;
+  min-width: 200px; /* Minimum width of each item */
+}
+
+.hostCarSharingBenefitsBlock {
+  text-align: center;
+}
+
+.hostCarSharingBenefitsBlock img {
+  width: 50px;
+  height: 100px;
+  margin-bottom: 0.5rem;
+}
+
+.cardBody {
+  padding: 0;
+}
+
+.hostCarSharingBenefitsBlockTitle {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.hostCarSharingBenefitsBlockDescription {
+  font-size: 1rem;
+}
+@media (max-width: 768px) {
+  .hostCarSharingBenefitsTitle {
+    font-size: 1.5rem; /* Smaller title font size on mobile */
+  }
+
+  .hostCarSharingBenefitsBlock img {
+    width: 50px; /* Maintain size for smaller screens */
+    height: 50px;
+  }
+
+  .hostCarSharingBenefitsBlockTitle {
+    font-size: 1rem; /* Smaller title font size on mobile */
+  }
+
+  .hostCarSharingBenefitsBlockDescription {
+    font-size: 0.85rem; /* Smaller description font size on mobile */
+  }
+  .hostCarSharingBenefitsFlex {
+    display: flex;
+    flex-direction: column; /* Align items horizontally */
+    flex-wrap: nowrap; /* Allow wrapping to next line if needed */
+    gap: 1rem; /* Space between items */
+  }
+}

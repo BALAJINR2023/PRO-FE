@@ -19,3 +19,20 @@ export const updateUser = async (userEmail, data) => {
     throw new Error(error.response?.data?.message || 'An error occurred');
   }
 };
+export const getUserProfile = async () => {
+  try {
+    const response = await axios.get(`${Url}/users/profile`, {
+      headers: {
+        'Authorization': localStorage.getItem('token'), // Assuming you're using token-based auth
+      },
+    });
+
+    if (response.status !== 200) {
+      throw new Error('Failed to fetch user profile');
+    }
+
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || 'An error occurred');
+  }
+};

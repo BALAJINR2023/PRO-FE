@@ -54,7 +54,7 @@ const Login = () => {
                       setTimeout(() => navigate('/'), 2000); // Redirect to home after 2 seconds
                     }
                   } catch (err) {
-                    setMessage('Login failed. Please try again.');
+                    setMessage('Login failed. Please try again.', err);
                     setVariant('danger');
                   }
                 }}

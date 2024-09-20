@@ -1,54 +1,25 @@
 import { useState } from 'react';
 import { Form, Button, Container, Row, Col, Card, Alert } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { userSignIn } from '../apis/login';
-
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 
 const Login = () => {
-  const [loginData, setLoginData] = useState({
-    emailOrMobile: '',
-    password: '',
-  });
   const navigate = useNavigate();
   const [message, setMessage] = useState('');
   const [variant, setVariant] = useState('danger'); // For alert color change
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setLoginData({ ...loginData, [name]: value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await userSignIn(loginData); // Call API for login
-      if (response.error) {
-        setMessage(response.error);
-        setVariant('danger');
-      } else {
-        setMessage('Login successful!');
-        setVariant('success');
-        
-        // Store token and login status
-        localStorage.setItem('token', response.token);
-        localStorage.setItem('username', JSON.stringify(response.user));
-        localStorage.setItem('isAuthenticated', true);
-        setLoginData({
-          emailOrMobile: "",
-          password: ""
-        });
-        setTimeout(() => navigate('/'), 2000); // Redirect to dashboard after 2 seconds
-      }
-    } catch (err) {
-      setMessage('Login failed. Please try again.', err);
-      setVariant('danger');
-    }
-  };
   const isAuthenticated = Boolean(localStorage.getItem("isAuthenticated"));
   if (isAuthenticated) {
     return <Navigate to="/" />;
   }
+
+  const validationSchema = Yup.object().shape({
+    emailOrMobile: Yup.string().required('Required'),
+    password: Yup.string().required('Required'),
+  });
+
   return (
     <Container fluid className="d-flex justify-content-center align-items-center min-vh-100 bg-light">
       <Row className="w-100 justify-content-center">
@@ -59,37 +30,71 @@ const Login = () => {
             </Card.Header>
             <Card.Body>
               {message && <Alert variant={variant}>{message}</Alert>}
-              <Form onSubmit={handleSubmit}>
-                <Form.Group controlId="formEmailOrMobile" className="mb-3">
-                  <Form.Label>Email or Mobile Number</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="emailOrMobile"
-                    placeholder="Enter your email or mobile number"
-                    value={loginData.emailOrMobile}
-                    onChange={handleChange}
-                    required
-                  />
-                </Form.Group>
-                
-                <Form.Group controlId="formPassword" className="mb-3">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    name="password"
-                    placeholder="Enter your password"
-                    value={loginData.password}
-                    onChange={handleChange}
-                    required
-                  />
-                </Form.Group>
+              <Formik
+                initialValues={{
+                  emailOrMobile: '',
+                  password: '',
+                }}
+                validationSchema={validationSchema}
+                onSubmit={async (values) => {
+                  try {
+                    const response = await userSignIn(values); // Call API for login
+                    if (response.error) {
+                      setMessage(response.error);
+                      setVariant('danger');
+                    } else {
+                      setMessage('Login successful!');
+                      setVariant('success');
 
-                <div className="d-grid">
-                  <Button variant="success" type="submit" className="mt-3">
-                    Login
-                  </Button>
-                </div>
-              </Form>
+                      // Store token and login status
+                      localStorage.setItem('token', response.token);
+                      localStorage.setItem('username', JSON.stringify(response.user));
+                      localStorage.setItem('isAuthenticated', true);
+
+                      setTimeout(() => navigate('/'), 2000); // Redirect to home after 2 seconds
+                    }
+                  } catch (err) {
+                    setMessage('Login failed. Please try again.');
+                    setVariant('danger');
+                  }
+                }}
+              >
+                {({ handleChange, handleBlur, handleSubmit, values }) => (
+                  <Form onSubmit={handleSubmit}>
+                    <Form.Group controlId="formEmailOrMobile" className="mb-3">
+                      <Form.Label>Email or Mobile Number</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="emailOrMobile"
+                        placeholder="Enter your email or mobile number"
+                        value={values.emailOrMobile}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        required
+                      />
+                    </Form.Group>
+                    
+                    <Form.Group controlId="formPassword" className="mb-3">
+                      <Form.Label>Password</Form.Label>
+                      <Form.Control
+                        type="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        value={values.password}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        required
+                      />
+                    </Form.Group>
+
+                    <div className="d-grid">
+                      <Button variant="success" type="submit" className="mt-3">
+                        Login
+                      </Button>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
 
               <div className="text-center mt-3">
                 <a href="/forgot-password" className="text-decoration-none">

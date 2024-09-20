@@ -2,14 +2,28 @@ import { useState } from 'react';
 import { Container, Row, Col, Card, Button, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { updateUser } from '../apis/user';
+import { getUserProfile, updateUser } from '../apis/user';
 
 const Profile = () => {
-  const initialProfile = JSON.parse(localStorage.getItem("username"));
-
-  const [profile, setProfile] = useState(initialProfile);
+  const [profile, setProfile] = useState({});
   const [editMode, setEditMode] = useState(false);
-  const [tempProfile, setTempProfile] = useState(initialProfile);
+  const [tempProfile, setTempProfile] = useState({});
+
+  const fetchProfile = async () => {
+    try {
+      const data = await getUserProfile(); // Fetch profile data from API
+      setProfile(data);
+      setTempProfile(data);
+    } catch (err) {
+      console.log(err);
+      alert(err.message);
+    }
+  };
+
+  // Call fetchProfile manually (e.g., on a button click)
+  const handleFetchProfile = () => {
+    fetchProfile();
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -29,7 +43,6 @@ const Profile = () => {
   const handleSave = async () => {
     try {
       const data = await updateUser(profile.email, tempProfile);
-      localStorage.setItem("username", JSON.stringify(data.updatedUser));
       setProfile(data.updatedUser);
     } catch (err) {
       console.log(err);
@@ -70,14 +83,13 @@ const Profile = () => {
                     </Form.Group>
                     <Form.Group className="mb-3">
                       <Form.Label>Date of Birth:</Form.Label>
-                      <div>{profile.dob ? (typeof profile.dob === 'string' ? profile.dob.slice(0, 10) : 'N/A') : 'N/A'}</div>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Label>Location:</Form.Label>
-                      <div>{profile.location}</div>
+                      <div>{profile.dob ? profile.dob.slice(0, 10) : 'N/A'}</div>
                     </Form.Group>
                     <Button variant="primary" onClick={handleEdit}>
                       Edit
+                    </Button>
+                    <Button variant="secondary" onClick={handleFetchProfile} className="ms-2">
+                      Refresh
                     </Button>
                   </>
                 ) : (
@@ -131,17 +143,6 @@ const Profile = () => {
                         value={tempProfile.dob ? tempProfile.dob.slice(0, 10) : ''}
                         onChange={handleInputChange}
                       />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Label>Location:</Form.Label>
-                      <Form.Select
-                        name="location"
-                        value={tempProfile.location}
-                        onChange={handleInputChange}
-                      >
-                        <option value="">Select Location</option>
-                        <option value="Tamil Nadu">Tamil Nadu</option>
-                      </Form.Select>
                     </Form.Group>
                     <Button variant="success" onClick={handleSave} className="me-2">
                       Save

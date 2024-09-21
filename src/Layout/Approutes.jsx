@@ -5,7 +5,7 @@ import Home from "../Pages/Home";
 import Register from "../apipages/register";
 import Login from "../apipages/login";
 import ResetPassword from "../apipages/Resetpage";
-import Profile from "../apipages/pro";
+import Profile from "../apipages/profile";
 import AddCar from "../apipages/Caradding";
 import CarList from "../apipages/list the car";
 import LocationCalendar from "../Pages/location";

@@ -1,10 +1,7 @@
-import './App.css'
 import AppRoutes from './Layout/Approutes'
 
 function App() {
-  
-
-  return (
+   return (
     <>
     <AppRoutes/>
     </>

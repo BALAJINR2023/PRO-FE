@@ -1,7 +1,7 @@
-import { useNavigate, useLocation } from 'react-router-dom'; // Import useLocation
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Container, Card, Row, Col, Spinner, Alert, Form, Button } from 'react-bootstrap';
-import { listCar } from '../apis/carhandleapis'; // Import the API function
+import { listCar } from '../apis/carhandleapis';
 
 const CarList = () => {
   const [cars, setCars] = useState([]);
@@ -12,16 +12,17 @@ const CarList = () => {
   const [fuelType, setFuelType] = useState('');
   const [transmissionType, setTransmissionType] = useState('');
   const [carType, setCarType] = useState('');
-  
+  const [seats, setSeats] = useState(''); // State for seat filter
+
   const navigate = useNavigate();
-  const { state } = useLocation(); // Get state from navigate
-  
+  const { state } = useLocation();
+
   useEffect(() => {
     const loadCars = async () => {
       try {
         const carData = await listCar();
         setCars(carData);
-        setFilteredCars(carData); // Initialize with all cars
+        setFilteredCars(carData);
       } catch (err) {
         setError('Failed to load cars. Please try again later.', err);
       } finally {
@@ -32,26 +33,25 @@ const CarList = () => {
     loadCars();
   }, []);
 
-  // Use the location passed from the previous component (LocationCalendar)
   useEffect(() => {
     if (state?.location) {
-      setLocation(state.location); // Set the location based on passed state
+      setLocation(state.location);
     }
   }, [state]);
 
-  // Filter cars based on location, fuel type, transmission type, and car type
+  // Filter cars based on various criteria including seats
   const filterCars = () => {
     const lowerCaseLocation = location.toLowerCase();
     const filtered = cars.filter(car => 
       car.location.toLowerCase().includes(lowerCaseLocation) &&
       (fuelType ? car.fuelType.toLowerCase() === fuelType.toLowerCase() : true) &&
       (transmissionType ? car.transmissionType.toLowerCase() === transmissionType.toLowerCase() : true) &&
-      (carType ? car.carType.toLowerCase() === carType.toLowerCase() : true)
+      (carType ? car.carType.toLowerCase() === carType.toLowerCase() : true) &&
+      (seats ? car.seats === (seats) : true) // Filter by seats
     );
     setFilteredCars(filtered);
   };
 
-  // Handle filter button click
   const handleFilterClick = () => {
     filterCars();
   };
@@ -72,7 +72,6 @@ const CarList = () => {
     <Container>
       <h2>Car List</h2>
 
-      {/* Sidebar for filters */}
       <Row>
         <Col md={3}>
           <div className="sidebar p-3">
@@ -84,7 +83,7 @@ const CarList = () => {
               <Form.Control
                 type="text"
                 placeholder="Enter location"
-                value={location} // Value comes from state
+                value={location}
                 onChange={(e) => setLocation(e.target.value)}
               />
             </Form.Group>
@@ -133,7 +132,21 @@ const CarList = () => {
               </Form.Control>
             </Form.Group>
 
-            {/* Button to filter car list */}
+            {/* Seats Filter */}
+            <Form.Group controlId="seatsFilter" className="mb-3">
+              <Form.Label>Seats</Form.Label>
+              <Form.Control
+                as="select"
+                value={seats}
+                onChange={(e) => setSeats(e.target.value)}
+              >
+                <option value="">Any</option>
+                <option value="5">5 </option>
+                <option value="7">7 </option>
+                <option value="8">8 </option>
+              </Form.Control>
+            </Form.Group>
+
             <Button variant="primary" onClick={handleFilterClick}>
               Apply Filters
             </Button>
@@ -159,6 +172,7 @@ const CarList = () => {
                         <strong>Car Type:</strong> {car.carType}<br />
                         <strong>Fuel Type:</strong> {car.fuelType}<br />
                         <strong>Transmission:</strong> {car.transmissionType}<br />
+                        <strong>Seats:</strong> {car.seats}<br />
                         <strong>Dealer Type:</strong> {car.dealerType}<br />
                         <strong>Year:</strong> {car.year}<br />
                       </Card.Text>

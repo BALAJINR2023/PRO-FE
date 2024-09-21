@@ -18,15 +18,12 @@ const AddCar = () => {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  // Handle File Upload
   const handleFileChange = (e) => {
     setCarImage(e.target.files[0]);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Create a car object with the entered values
     const carData = {
       name,
       model,

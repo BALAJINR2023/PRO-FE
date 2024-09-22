@@ -89,6 +89,12 @@ const Layout = () => {
 
         {/* Login/Signup or Logout */}
         <Nav className="ms-auto">
+        <Nav.Link  href="/addcar" className="d-flex align-items-center bg-white text-dark py-2 px-3 border rounded" 
+                   style={{ boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)' }}>
+         CARHOST
+        </Nav.Link>
+
+
           {isAuthenticated ? (
             <>
               <Nav.Item className="d-flex align-items-center">

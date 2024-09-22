@@ -17,7 +17,8 @@ const Booking = () => {
   }
 
   return (
-    <Container>
+    <div style={{ marginTop: "100px" }}>
+    <Container >
       <h2>Booking Details</h2>
       <Card className="mb-4">
         {car.image && (
@@ -39,6 +40,7 @@ const Booking = () => {
         </Card.Body>
       </Card>
     </Container>
+    </div>
   );
 };
 

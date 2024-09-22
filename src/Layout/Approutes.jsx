@@ -8,9 +8,10 @@ import ResetPassword from "../apipages/Resetpage";
 import Profile from "../apipages/profile";
 import AddCar from "../apipages/Caradding";
 import CarList from "../apipages/list the car";
-import LocationCalendar from "../Pages/location";
 import Booking from "../apipages/Booking";
 import ForgotPassword from "../apipages/ForgotPassword";
+
+import LocationCalendar from "../Pages/location";
 
 
 
@@ -42,8 +43,6 @@ const AppRoutes = () => {
         <Route path="/" element={<Layout/>} >
           <Route index element={<Home/>} />
           <Route path="profile" element={<ProtectedRoute component={<Profile/>}/>}/>
-          <Route path="addcar" element={<ProtectedRoute component={<AddCar/>}/>}/>
-          <Route path="listcar" element={<ProtectedRoute component={<CarList/>}/>}/>
           <Route path="booking" element={<Booking/>} />
         </Route>
            <Route path="/login" element={<Login />} />
@@ -51,6 +50,8 @@ const AppRoutes = () => {
            <Route path="/forgot-password" element={<ForgotPassword />} />
            <Route path="/reset-password/:token" element={<ResetPassword />} /> 
            <Route path="/location" element={<LocationCalendar/>} />
+           <Route path="/addcar" element={<ProtectedRoute component={<AddCar/>}/>}/>
+           <Route path="listcar" element={<ProtectedRoute component={<CarList/>}/>}/>
       </Routes>
     </BrowserRouter>
   );

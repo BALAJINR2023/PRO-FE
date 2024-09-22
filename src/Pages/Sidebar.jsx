@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Nav, Button, Offcanvas } from 'react-bootstrap';
 import styles from './Sidebar.module.css'; // Import CSS module
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBuilding, faCar, faCarAlt, faGlobeAsia, faHome,  faNewspaper, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faCar, faGlobeAsia, faHome,  faNewspaper, faUser } from '@fortawesome/free-solid-svg-icons';
 import { faBlog } from '@fortawesome/free-solid-svg-icons/faBlog';
 
 
@@ -30,9 +30,6 @@ const Sidebar = () => {
           <Nav className="flex-column">
           <Nav.Link  href="/" className="d-flex align-items-center">
               <FontAwesomeIcon icon={faHome} className="me-2" />Home
-          </Nav.Link>
-          <Nav.Link  href="/addcar" className="d-flex align-items-center">
-              <FontAwesomeIcon icon={faCarAlt} className="me-2" />Add CarHost
           </Nav.Link>
           <Nav.Link  href="/profile" className="d-flex align-items-center">
               <FontAwesomeIcon icon={faUser} className="me-2" />Profile
